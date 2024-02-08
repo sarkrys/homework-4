@@ -1,184 +1,96 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 
 class figure {
 protected:
-    int a;
-    int b;
-    int c;
-    int d;
-    int A;
-    int B;
-    int C;
-    int D;
+    int a, b, c, d;
+    int A, B, C, D;
 
 public:
-    figure(int a,int b,int c,int d,int A,int B, int C, int D) : a(a), b(b), c(c), d(d), A(A), B(B), C(C), D(D) {}
-    int get_figur() {
-        return a , b, c, d, A, B, C, D;
-    }
+    figure(int a = 0, int b = 0, int c = 0, int d = 0, int A = 0, int B = 0, int C = 0, int D = 0)
+        : a(a), b(b), c(c), d(d), A(A), B(B), C(C), D(D) {}
+
     void printfigure(std::string figurname) {
-        std::cout << std::endl <<  figurname << ": " << std::endl << "Стороны: " << "a=" << a << " b=" << b << " c=" << c << std::endl << "Углы: " << "A=" << A << " B=" << B<< " C=" << C;
-    }
-    void printfiguretwoword(std::string figurnamef, std::string figurnames) {
-        std::cout << std::endl<< figurnamef << " " << figurnames << ": " << std::endl << "Стороны: " << "a=" << a << " b=" << b << " c=" << c << std::endl << "Углы: " << "A=" <<A << " B="  << B<< " C=" << C;
-    }
-    void printfigurechetug(std::string figurname) {
-        std::cout  << std::endl<< figurname << ": " << std::endl << "Стороны: " << "a=" << a << " b=" << b << " c=" << c << " d=" << d <<  std::endl << "Углы: " << "A=" << A << " B="  << B<< " C=" << C << " D=" << D << std::endl << std::endl;
+        std::cout << std::endl << figurname << ": " << std::endl
+            << "Стороны: a=" << a << " b=" << b << " c=" << c << " d=" << d << std::endl
+            << "Углы: A=" << A << " B=" << B << " C=" << C << " D=" << D << std::endl;
     }
 };
 
 class triangle : public figure {
 public:
-    triangle(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 10;
-        b = 20;
-        c = 30;
-        A = 50;
-        B = 60;
-        C = 70;
-    }
+    triangle() : figure(10, 20, 30, 0, 50, 60, 70, 0) {}
 };
 
-class pramtriug : public figure {
+class right_triangle : public figure {
 public:
-    pramtriug(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createpramtriug() {
-        a = 10;
-        b = 20;
-        c = 30;
-        A = 50;
-        B = 60;
-        C = 90;
-    }
+    right_triangle() : figure(10, 20, 30, 0, 50, 60, 90, 0) {}
 };
-class ravnobedtriug : public figure {
+
+class isosceles_triangle : public figure {
 public:
-    ravnobedtriug(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 10;
-        b = 20;
-        c = 30;
-        A = 50;
-        B = 60;
-        C = 50;
-    }
-}; class ravnostrtriug : public figure {
+    isosceles_triangle() : figure(10, 20, 10, 0, 50, 60, 50, 0) {}
+};
+
+class equilateral_triangle : public figure {
 public:
-    ravnostrtriug(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 30;
-        b = 30;
-        c = 30;
-        A = 60;
-        B = 60;
-        C = 60;
-    }
-}; class chetirehug : public figure {
+    equilateral_triangle() : figure(30, 30, 30, 0, 60, 60, 60, 0) {}
+};
+
+class quadrilateral : public figure {
 public:
-    chetirehug(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 10;
-        b = 20;
-        c = 30;
-        d = 40;
-        A = 50;
-        B = 60;
-        C = 70;
-        D = 80;
-    }
-}; class priamoug : public figure {
+    quadrilateral() : figure(10, 20, 30, 40, 50, 60, 70, 80) {}
+};
+
+class rectangle : public figure {
 public:
-    priamoug(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 10;
-        b = 20;
-        c = 10;
-        d = 20;
-        A = 90;
-        B = 90;
-        C = 90;
-        D = 90;
-    }
-}; class kvadrat : public figure {
+    rectangle() : figure(10, 20, 10, 20, 90, 90, 90, 90) {}
+};
+
+class square : public figure {
 public:
-    kvadrat(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 20;
-        b = 20;
-        c = 20;
-        d = 20;
-        A = 90;
-        B = 90;
-        C = 90;
-        D = 90;
-    }
-}; class paralerogram : public figure {
+    square() : figure(20, 20, 20, 20, 90, 90, 90, 90) {}
+};
+
+class parallelogram : public figure {
 public:
-    paralerogram(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 20;
-        b = 30;
-        c = 20;
-        d = 30;
-        A = 30;
-        B = 40;
-        C = 30;
-        D = 40;
-    }
-}; class romb : public figure {
+    parallelogram() : figure(20, 30, 20, 30, 30, 40, 30, 40) {}
+};
+
+class rhombus : public figure {
 public:
-    romb(int a, int b, int c, int d, int A, int B, int C, int D) : figure(a, b, c, d, A, B, C, D) {}
-    void createtriangl() {
-        a = 30;
-        b = 30;
-        c = 30;
-        d = 30;
-        A = 30;
-        B = 40;
-        C = 30;
-        D = 30;
-    }
+    rhombus() : figure(30, 30, 30, 30, 30, 40, 30, 40) {}
 };
 
 int main() {
+    setlocale(LC_ALL, "ru");
 
-    triangle mytri(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfigure("треугольник");
+    triangle tri;
+    tri.printfigure("Треугольник");
 
-    pramtriug mytripra(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfiguretwoword("прямоугоьный", "треугольник");
+    right_triangle right_tri;
+    right_tri.printfigure("Прямоугольный треугольник");
 
-    ravnobedtriug mytrirav(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfiguretwoword("равнобедренный", "треугольник");
+    isosceles_triangle iso_tri;
+    iso_tri.printfigure("Равнобедренный треугольник");
 
-    ravnostrtriug mytriravstr(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfiguretwoword("равносторонний", "треугольник");
+    equilateral_triangle eq_tri;
+    eq_tri.printfigure("Равносторонний треугольник");
 
-    chetirehug mychet(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfigure("четырёхугольник");
+    quadrilateral quad;
+    quad.printfigure("Четырёхугольник");
 
-    priamoug mypramoug(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfigure("прямоугольник");
+    rectangle rect;
+    rect.printfigure("Прямоугольник");
 
-    kvadrat mykvadr(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfigure("квадрат");
+    square sq;
+    sq.printfigure("Квадрат");
 
-    paralerogram myparal(0, 0, 0, 0, 0, 0, 0, 0);
-    mytri.createtriangl();
-    mytri.printfigure("паралерограмм");
+    parallelogram para;
+    para.printfigure("Параллелограмм");
 
-    romb myromb(0, 0,0,0,0,0,0,0);
-    mytri.createtriangl();
-    mytri.printfigure("ромб");
+    rhombus rhom;
+    rhom.printfigure("Ромб");
+
     return 0;
 }

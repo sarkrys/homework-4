@@ -6,7 +6,7 @@ class figure {
 protected:
     int num;
 public:
-    figure(int n) : num(n) {}
+    figure() : num(0) {}
     int get_figur() {
         return num;
     }
@@ -17,30 +17,27 @@ public:
 
 class triangle : public figure {
 public:
-    triangle(int n) : figure(n) {}
-    void createtriangl() {
+    triangle() {
         num = 3;
     }
 };
 
 class quadrilateral : public figure {
 public:
-    quadrilateral(int n) : figure(n) {}
-    void createtriangl() {
+    quadrilateral() {
         num = 4;
     }
 };
 
 int main() {
-    figure myfig(0);
+    setlocale(LC_ALL, "RU");
+    figure myfig;
     myfig.printfigure("фигура");
 
-    triangle mytri(0);
-    mytri.createtriangl();
+    triangle mytri;
     mytri.printfigure("треугольник");
 
-    quadrilateral myquad(0);
-    mytri.createtriangl();
-    mytri.printfigure("квадрат");
+    quadrilateral myquad;
+    myquad.printfigure("четырехугольник");
     return 0;
 }
