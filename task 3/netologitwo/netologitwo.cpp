@@ -1,17 +1,18 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
-
 class figure {
 protected:
     int a, b, c, d, A, B, C, D;
-
 public:
-    figure() : a(0), b(0), c(0), d(0), A(0), B(0), C(0), D(0) {}
-
+    figure(int side1, int side2, int side3, int side4, int angle1, int angle2, int angle3, int angle4)
+        : a(side1), b(side2), c(side3), d(side4), A(angle1), B(angle2), C(angle3), D(angle4) {}
+    figure(int side1, int side2, int side3, int angle1, int angle2, int angle3)
+        : a(side1), b(side2), c(side3), d(0), A(angle1), B(angle2), C(angle3), D(0) {}
+    figure(int side)
+        : a(side), b(side), c(side), d(0), A(60), B(60), C(60), D(0) {}
     virtual bool checkValidity() {
         return false;
     }
-
     void printFigureInfo(std::string figurname) {
         std::cout << figurname << ":\n";
         if (checkValidity()) {
@@ -48,159 +49,100 @@ public:
         }
         std::cout << std::endl << std::endl;
     }
-
     virtual int getSideCount() {
         return 0;
     }
 };
-
 class triangle : public figure {
 public:
-    triangle() : figure() {
-        a = 10;
-        b = 20;
-        c = 30;
-        A = 50;
-        B = 60;
-        C = 70;
-    }
-
+    triangle(int side1, int side2, int side3, int angle1, int angle2, int angle3)
+        : figure(side1, side2, side3, 0, angle1, angle2, angle3, 0) {}
     bool checkValidity() override {
         return (a + b > c && a + c > b && b + c > a && A + B + C == 180 && getSideCount() == 3);
     }
-
     int getSideCount() override {
         return 3;
     }
 };
-
 class right_triangle : public triangle {
 public:
-    right_triangle() : triangle() {
-        C = 90;
-    }
-
+    right_triangle(int side1, int side2, int angle1, int angle2)
+        : triangle(side1, side2, 0, angle1, angle2, 90) {}
     bool checkValidity() override {
         return (A == 90 && B == 90 && C == 90);
     }
 };
-
-class isosceles_triangle : public triangle {
-public:
-    isosceles_triangle() : triangle() {
-        a = 15;
-        b = 15;
-        c = 20;
-    }
-
-    bool checkValidity() override {
-        return (a == b || a == c || b == c);
-    }
-};
-
 class equilateral_triangle : public triangle {
 public:
-    equilateral_triangle() : triangle() {
-        a = 10;
-        b = 10;
-        c = 10;
-    }
-
+    equilateral_triangle(int side)
+        : triangle(side, side, side, 60, 60, 60) {}
     bool checkValidity() override {
         return (a == b && b == c);
     }
 };
-
-class quadrilateral : public figure {
+class ravnobed_triangle : public triangle {
 public:
-    quadrilateral() : figure() {
-        a = 10;
-        b = 20;
-        c = 30;
-        d = 40;
-        A = 50;
-        B = 60;
-        C = 70;
-        D = 80;
-    }
+    ravnobed_triangle(int side1, int side2, int side3, int angle1, int angle2, int angle3)
+        : triangle(side1, side2, side3, angle1, angle2, angle3) {}
 
     bool checkValidity() override {
-        return (getSideCount() == 4 && A + B + C + D == 360);
+        return (a == c && A == C && getSideCount() == 3);
     }
+};
 
+class rectangle : public figure {
+public:
+    rectangle(int side1, int side2) : figure(side1, side2, side1, side2, 90, 90, 90, 90) {}
+    bool checkValidity() override {
+        return (a == c && b == d) && (A == B && B == C && C == D && A == 90);
+    }
     int getSideCount() override {
         return 4;
     }
 };
-
-class rectangle : public quadrilateral {
-public:
-    rectangle() : quadrilateral() {
-        C = 90;
-        D = 90;
-    }
-
-    bool checkValidity() override {
-        return (((a == c && b == d) || (a == b && c == d)) && (A == 90 && B == 90 && C == 90 && D == 90));
-    }
-};
-
 class square : public rectangle {
 public:
-    square() : rectangle() {
-        A = 90;
-        B = 90;
-        C = 90;
-        D = 90;
-    }
-
+    square(int side) : rectangle(side, side) {}
     bool checkValidity() override {
         return (a == b && b == c && c == d && A == B && B == C && C == D && A == 90);
     }
 };
-
-class parallelogram : public quadrilateral {
+class parallelogram : public figure {
 public:
-    parallelogram() : quadrilateral() {}
-
+    parallelogram(int side1, int side2, int angle)
+        : figure(side1, side2, side1, side2, angle, 180 - angle, angle, 180 - angle) {}
     bool checkValidity() override {
-        return ((a == c && b == d) || (a == b && c == d));
+        return (a == c && b == d) && (A == B && B == C && C == D);
+    }
+    int getSideCount() override {
+        return 4;
     }
 };
-
 class rhombus : public square {
 public:
-    rhombus() : square() {}
-};
+    rhombus(int side) : square(side) {}
 
+    bool checkValidity() override {
+        return (a == b && b == c && c == d) && (A == C && B == D && A == 60);
+    }
+};
 int main() {
     setlocale(LC_ALL, "ru");
-    triangle tri;
+    triangle tri(10, 20, 30, 50, 60, 70);
     tri.printFigureInfo("Треугольник");
-
-    right_triangle right_tri;
+    right_triangle right_tri(10, 20, 50, 60);
     right_tri.printFigureInfo("Прямоугольный треугольник");
-
-    isosceles_triangle iso_tri;
-    iso_tri.printFigureInfo("Равнобедренный треугольник");
-
-    equilateral_triangle equi_tri;
-    equi_tri.printFigureInfo("Равносторонний треугольник");
-
-    quadrilateral quad;
-    quad.printFigureInfo("Четырехугольник");
-
-    rectangle rect;
+    equilateral_triangle eq_tri(30);
+    eq_tri.printFigureInfo("Равносторонний треугольник");
+    ravnobed_triangle ra_tri(10, 20, 10, 50, 60, 50);
+    eq_tri.printFigureInfo("Равнобедренный треугольник");
+    rectangle rect(10, 20);
     rect.printFigureInfo("Прямоугольник");
-
-    square sq;
+    square sq(30);
     sq.printFigureInfo("Квадрат");
-
-    parallelogram para;
+    parallelogram para(20, 30, 40);
     para.printFigureInfo("Параллелограмм");
-
-    rhombus rhom;
+    rhombus rhom(30);
     rhom.printFigureInfo("Ромб");
-
     return 0;
 }
