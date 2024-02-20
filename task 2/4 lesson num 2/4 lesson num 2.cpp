@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 
 class figure {
@@ -19,36 +19,36 @@ public:
 
 class triangle : public figure {
 public:
-    triangle(int side1, int side2, int side3, int angle1, int angle2, int angle3) 
+    triangle(int side1, int side2, int side3, int angle1, int angle2, int angle3)
         : figure(side1, side2, side3, 0, angle1, angle2, angle3, 0) {}
 };
 
 class right_triangle : public figure {
 public:
-    right_triangle(int side1, int side2, int angle1, int angle2) 
+    right_triangle(int side1, int side2, int angle1, int angle2)
         : figure(side1, side2, 0, 0, angle1, angle2, 90, 0) {}
 };
 
 class isosceles_triangle : public figure {
 public:
-    isosceles_triangle(int side1, int side2, int angle1, int angle2) 
+    isosceles_triangle(int side1, int side2, int angle1, int angle2)
         : figure(side1, side2, side1, 0, angle1, angle2, angle1, 0) {}
 };
 
 class equilateral_triangle : public figure {
 public:
-    equilateral_triangle(int side) 
+    equilateral_triangle(int side)
         : figure(side, side, side, 0, 60, 60, 60, 0) {}
 };
 class rectangle : public figure {
 public:
-    rectangle(int side1, int side2) 
+    rectangle(int side1, int side2)
         : figure(side1, side2, side1, side2, 90, 90, 90, 90) {}
 };
 
 class square : public figure {
 public:
-    square(int side) 
+    square(int side)
         : figure(side, side, side, side, 90, 90, 90, 90) {}
 };
 
@@ -63,7 +63,6 @@ public:
     rhombus(int side, int angle)
         : figure(side, side, side, side, angle, 180 - angle, angle, 180 - angle) {}
 };
-
 
 int main() {
     setlocale(LC_ALL, "ru");
@@ -91,6 +90,5 @@ int main() {
 
     rhombus rhom(30, 60);
     rhom.printfigure("Ромб");
-
     return 0;
 }
